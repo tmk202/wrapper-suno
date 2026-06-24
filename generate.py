@@ -241,6 +241,16 @@ def run_browser(style: str, count: int, out_dir: Path, preset_name: str, headles
     except Exception as e:
         print(f"  auto-merge failed: {e}")
 
+    # Auto-setup video folders: create v{NN}/ for any new MP3 not yet foldered.
+    # Idempotent — safe to run multiple times. Drops notes.md template + copies audio.
+    # User adds thumbnail.jpg by hand later.
+    try:
+        from setup_videos import setup_videos
+        print("\nAuto-setup video folders (idempotent):")
+        setup_videos(out_dir)
+    except Exception as e:
+        print(f"  auto-setup-videos failed: {e}")
+
 
 if __name__ == "__main__":
     main()

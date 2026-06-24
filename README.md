@@ -158,7 +158,21 @@ videos/v01/
 └── notes.md          # title, description, tags, publish checklist
 ```
 
-Setup sẵn 5 video từ audio đã generate (xem [`videos/README.md`](videos/README.md) để biết file nào map vào video nào).
+### Tự động tạo folder mới khi generate
+
+Sau khi `generate.py` merge xong, `setup_videos.py` tự chạy:
+- Tìm MP3 mới trong `output/YYYY-MM-DD/` chưa có folder
+- Tạo `videos/v{NN}/{audio.mp3, notes.md}` (idempotent — chạy nhiều lần OK)
+- Skip file preview (`*v55preview*`) và file đã có folder (theo content hash)
+
+**Manual run:**
+```bash
+python setup_videos.py                              # today's output
+python setup_videos.py output/2026-06-24            # specific date
+python setup_videos.py --dry                        # preview only
+```
+
+Xem chi tiết trong [`videos/README.md`](videos/README.md).
 
 ## 10. Ghi chú kỹ thuật (từ session khảo sát)
 

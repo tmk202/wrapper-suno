@@ -1,0 +1,7 @@
+.venv/
+.env
+__pycache__/
+*.pyc
+output/
+suno_cookies.json
+suno_debug.png

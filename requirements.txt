@@ -1,0 +1,10 @@
+# Pick ONE of these install profiles:
+
+# Profile A — API only (lighter, ~5 MB)
+requests>=2.31
+python-dotenv>=1.0
+
+# Profile B — Browser automation (heavier, ~200 MB, needs `playwright install chromium` after)
+# requests>=2.31
+# python-dotenv>=1.0
+# playwright>=1.42

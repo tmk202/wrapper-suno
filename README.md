@@ -6,6 +6,8 @@ Hai backend:
 - **`--backend api`** — gọi Suno HTTP API (cần `SUNO_API_KEY` trong `.env`, vài trăm MB RAM)
 - **`--backend browser`** — điều khiển suno.com bằng Playwright (login 1 lần, cookie lưu lại, ~200 MB)
 
+Sau khi generate xong có thể merge tất cả thành 1 file bằng `merge.py`. Thumbnail YouTube bạn tự upload vào `thumbnails/` rồi dùng `validate_thumbnail.py` kiểm tra spec.
+
 ## ⚠️ Về plan Suno của bạn
 
 Khảo sát tài khoản hiện tại (chrome-devtools snapshot, 2026-06-24):
@@ -130,7 +132,22 @@ Mở `presets.py`, sửa `style` của preset. Style prompt là text tự nhiên
 - **Upload thẳng lên YouTube** → thêm bước YouTube Data API sau khi download.
 - **Bỏ browser, dùng API thật của Suno** → base URL là `https://studio-api-prod.suno.com`, auth bằng `browser-token` header + `authorization: Bearer <clerk JWT>`. Có thể bắt từ network log khi đăng nhập web (mình đã verify qua DevTools). Viết wrapper riêng nếu bạn muốn đi sâu hướng này.
 
-## 8. Ghi chú kỹ thuật (từ session khảo sát)
+## 8. Thumbnail YouTube
+
+Tool **không tự generate thumbnail** — đó là lựa chọn sáng tạo của bạn. Workflow:
+
+1. **Thiết kế thumbnail** trong Canva/Photoshop/Figma (1280×720, 16:9, JPG/PNG, < 2 MB)
+2. **Drop file vào `thumbnails/`**
+3. **Validate:**
+   ```bash
+   python validate_thumbnail.py
+   python validate_thumbnail.py thumbnails/your.jpg --strict
+   ```
+4. **Upload lên YouTube** khi publish video (YouTube Studio → Custom thumbnail)
+
+Xem chi tiết trong [`thumbnails/README.md`](thumbnails/README.md).
+
+## 9. Ghi chú kỹ thuật (từ session khảo sát)
 
 Khảo sát UI thật bằng Chrome DevTools MCP (2026-06-24), selectors trong `suno_browser.py` map từ accessibility tree:
 
